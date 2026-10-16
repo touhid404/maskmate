@@ -1,3 +1,4 @@
+import { drawSticker } from "./stickers";
 import type { Region, SourceImage } from "../types/editor";
 export function canvas2d(width: number, height: number) {
   const canvas = document.createElement("canvas");
@@ -55,7 +56,9 @@ export function renderEditedImage(
   if (!ctx) throw new Error("Image rendering is unavailable.");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(source.image, 0, 0);
-  for (const r of regions.filter((r) => r.tool !== "redact")) {
+  for (const r of regions.filter(
+    (r) => r.tool === "blur" || r.tool === "pixelate",
+  )) {
     if (r.width < 1 || r.height < 1) continue;
     ctx.save();
     ctx.beginPath();
@@ -98,6 +101,9 @@ export function renderEditedImage(
       crop.width = crop.height = 0;
     }
     ctx.restore();
+  }
+  for (const r of regions.filter((r) => r.tool === "sticker")) {
+    if (r.width >= 1 && r.height >= 1) drawSticker(ctx, r);
   }
   // Security invariant: solid regions are always the final, fully opaque pass.
   for (const r of regions.filter((r) => r.tool === "redact")) {

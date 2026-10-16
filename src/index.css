@@ -2598,3 +2598,297 @@ select {
     font-size: 11px;
   }
 }
+/* A centered introduction leads into a wide, usable product preview. */
+.hero.container {
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+  text-align: center;
+  min-height: 0;
+  padding-top: 65px;
+  padding-bottom: 55px;
+}
+.hero-copy {
+  width: 100%;
+  max-width: 940px;
+}
+.hero-copy > .eyebrow,
+.hero-actions,
+.hero-assurances {
+  justify-content: center;
+}
+.hero h1 {
+  font-size: clamp(50px, 5.8vw, 80px);
+  line-height: 1.08;
+  letter-spacing: -4px;
+  margin: 24px 0 26px;
+  white-space: normal;
+}
+.hero-description {
+  max-width: 480px;
+  margin-inline: auto;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.hero-actions {
+  margin-top: 26px;
+}
+.hero-assurances {
+  margin-top: 19px;
+}
+.hero-visual {
+  width: 760px;
+  max-width: calc(100% - 30px);
+  padding: 24px 0 22px;
+  margin: 0 auto;
+}
+.hero-visual:before {
+  inset: 35px -50px 10px;
+  background: #edf2e5;
+  border-radius: 45% 45% 30% 30%;
+  transform: none;
+}
+.hero-visual:after {
+  right: -30px;
+  top: 70px;
+}
+.demo-window {
+  transform: none;
+  border-radius: 14px;
+  box-shadow: 0 25px 65px -35px #36542f40;
+}
+.window-bar {
+  height: 40px;
+  padding-inline: 18px;
+}
+.demo-body {
+  justify-content: center;
+  padding: 23px 60px;
+  min-height: 360px;
+}
+.demo-tools {
+  left: 14px;
+  top: 23px;
+  bottom: 23px;
+  gap: 11px;
+}
+.demo-tools button {
+  width: 36px;
+  height: 36px;
+}
+.hero-visual .receipt {
+  max-width: 350px;
+  padding: 16px 24px 13px;
+}
+.hero-visual .receipt-success {
+  padding: 15px 0 12px;
+}
+.hero-visual .receipt-amount {
+  padding: 12px 0;
+}
+.hero-visual .receipt-rows {
+  gap: 14px;
+  padding-block: 15px;
+}
+.hero-visual .receipt-rows b,
+.hero-visual .receipt-rows > div {
+  font-size: 8px;
+}
+.hero-visual .receipt-heading {
+  font-size: 9px;
+}
+.hero-visual .receipt-success strong {
+  font-size: 12px;
+}
+.demo-status {
+  height: 36px;
+  padding-inline: 18px;
+  font-size: 8px;
+}
+.note-top {
+  top: 75px;
+  left: -80px;
+  transform: rotate(-5deg);
+  padding: 13px 18px;
+  font-size: 10px;
+}
+.note-bottom {
+  bottom: 70px;
+  right: -65px;
+  transform: rotate(5deg);
+  padding: 15px 20px;
+  font-size: 11px;
+}
+.visual-caption {
+  left: 50%;
+  bottom: -3px;
+  transform: translateX(-50%) rotate(-2deg);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.sticker-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.sticker-options button {
+  display: grid;
+  place-items: center;
+  background: #f5edce;
+  color: #89713b;
+  border: 1px solid #e8ddae;
+  border-radius: 9px;
+  min-height: 46px;
+  transition: background 0.15s;
+}
+.sticker-options button:nth-child(2) {
+  background: #fbe8ec;
+  color: #d98496;
+  border-color: #f0d2db;
+}
+.sticker-options button:nth-child(3) {
+  background: #fff0c3;
+  color: #c29b3b;
+  border-color: #f1df9e;
+}
+.sticker-options button:nth-child(4) {
+  background: #e6f0df;
+  color: #6d975b;
+  border-color: #d6e5ca;
+}
+.sticker-options button[aria-pressed="true"] {
+  outline: 2px solid #54875d;
+  outline-offset: 2px;
+}
+.sticker-symbol {
+  background: #fff2ce;
+  color: #9a7b32;
+  border-color: #eee3c5;
+}
+@media (max-width: 1000px) {
+  .hero-visual {
+    width: 660px;
+    max-width: calc(100% - 75px);
+  }
+  .note-top {
+    left: -42px;
+    font-size: 9px;
+  }
+  .note-bottom {
+    right: -35px;
+    font-size: 10px;
+  }
+  .hero h1 {
+    font-size: 65px;
+  }
+}
+@media (max-width: 600px) {
+  .hero.container {
+    gap: 27px;
+    padding-top: 39px;
+    padding-bottom: 39px;
+  }
+  .hero-copy > .eyebrow {
+    font-size: 7px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 10.3vw, 56px);
+    letter-spacing: -2px;
+    line-height: 1.12;
+    margin-block: 21px;
+  }
+  .hero-description {
+    font-size: 12px;
+    max-width: 325px;
+  }
+  .hero-actions {
+    gap: 21px;
+    margin-top: 23px;
+  }
+  .hero-assurances {
+    margin-top: 18px;
+  }
+  .hero-visual {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 0 18px;
+  }
+  .hero-visual:before {
+    inset: 8px -8px 20px;
+  }
+  .hero-visual:after {
+    display: none;
+  }
+  .demo-body {
+    padding: 19px 15px 19px 52px;
+    min-height: 0;
+  }
+  .hero-visual .receipt {
+    padding: 14px 15px 11px;
+  }
+  .hero-visual .receipt-rows b,
+  .hero-visual .receipt-rows > div {
+    font-size: 7px;
+  }
+  .hero-visual .receipt-heading {
+    font-size: 8px;
+  }
+  .demo-tools {
+    left: 9px;
+    top: 20px;
+    bottom: 20px;
+  }
+  .demo-tools button {
+    width: 31px;
+    height: 31px;
+  }
+  .window-bar {
+    height: 33px;
+    font-size: 8px;
+    padding-inline: 12px;
+  }
+  .demo-status {
+    height: 33px;
+    padding-inline: 9px;
+    font-size: 6px;
+  }
+  .note-top {
+    left: -4px;
+    top: 2px;
+    font-size: 7px;
+    padding: 8px 10px;
+  }
+  .note-top svg {
+    width: 12px;
+  }
+  .note-bottom {
+    right: -4px;
+    bottom: 6px;
+    padding: 10px;
+    font-size: 8px;
+    gap: 7px;
+  }
+  .note-bottom small {
+    font-size: 6px;
+  }
+  .note-bottom > svg {
+    width: 14px;
+  }
+  .note-check {
+    height: 22px;
+    width: 22px;
+  }
+  .visual-caption {
+    bottom: -9px;
+    font-size: 9px;
+  }
+  .editor-tools {
+    padding-inline: 9px;
+  }
+  .editor-tool {
+    width: 49px;
+  }
+  .sticker-options {
+    gap: 9px;
+  }
+}

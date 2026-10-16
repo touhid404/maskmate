@@ -1,6 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { PointerEvent } from "react";
-import type { Point, Region, SourceImage, Tool } from "../types/editor";
+import type {
+  Point,
+  Region,
+  SourceImage,
+  Tool,
+  StickerStyle,
+} from "../types/editor";
 import { clamp, contains, imagePoint, rectangle } from "../lib/geometry";
 import { toast } from "sonner";
 import { renderEditedImage } from "../lib/imageProcessing";
@@ -12,6 +18,7 @@ interface Props {
   tool: Tool | "select";
   color: string;
   intensity: number;
+  sticker: StickerStyle;
   zoom: number;
   compare: boolean;
   commit: (regions: Region[]) => void;
@@ -29,6 +36,7 @@ export function EditorCanvas({
   tool,
   color,
   intensity,
+  sticker,
   zoom,
   compare,
   commit,
@@ -105,6 +113,7 @@ export function EditorCanvas({
         tool,
         color,
         intensity,
+        sticker,
       };
       gesture.current = { start: p, region: r, mode: "draw" };
       setDraft(r);

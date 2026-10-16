@@ -21,9 +21,13 @@ import {
   X,
   LoaderCircle,
   Keyboard,
+  Smile,
+  Heart,
+  Star,
+  Lock,
 } from "lucide-react";
 import { toast } from "sonner";
-import type { Region, SourceImage, Tool } from "../types/editor";
+import type { Region, SourceImage, Tool, StickerStyle } from "../types/editor";
 import { Brand } from "./Brand";
 import { Button } from "./ui/button";
 import { EditorCanvas } from "./EditorCanvas";
@@ -36,6 +40,7 @@ const tools = [
   { id: "redact", label: "Redact", icon: Square },
   { id: "blur", label: "Blur", icon: Droplets },
   { id: "pixelate", label: "Pixelate", icon: Grid2X2 },
+  { id: "sticker", label: "Stickers", icon: Smile },
 ] as const;
 export function Editor({
   source,
@@ -55,6 +60,7 @@ export function Editor({
     [selected, setSelected] = useState<string | null>(null),
     [color, setColor] = useState("#000000"),
     [intensity, setIntensity] = useState(16),
+    [sticker, setSticker] = useState<StickerStyle>("smile"),
     [zoom, setZoom] = useState(1),
     [compare, setCompare] = useState(false),
     [settings, setSettings] = useState(false),
@@ -72,10 +78,15 @@ export function Editor({
   };
   const changeTool = (next: Tool | "select") => {
     setTool(next);
+    const nextColor =
+      next === "sticker" ? "#075b45" : next === "redact" ? "#000000" : color;
+    if (next === "sticker" || next === "redact") setColor(nextColor);
     if (selectedRegion && next !== "select")
       commit(
         state.regions.map((r) =>
-          r.id === selected ? { ...r, tool: next, color, intensity } : r,
+          r.id === selected
+            ? { ...r, tool: next, color: nextColor, intensity, sticker }
+            : r,
         ),
       );
   };
@@ -331,6 +342,7 @@ export function Editor({
             tool={tool}
             color={color}
             intensity={intensity}
+            sticker={sticker}
             zoom={zoom}
             compare={compare}
             commit={commit}
@@ -395,15 +407,55 @@ export function Editor({
               <option value="redact">Solid redaction</option>
               <option value="blur">Blur</option>
               <option value="pixelate">Pixelate</option>
+              <option value="sticker">Opaque sticker</option>
             </select>
-            {activeEffect === "redact" ? (
+            {activeEffect === "sticker" && (
+              <div className="sticker-picker">
+                <span className="field-label">Choose a sticker</span>
+                <div className="sticker-options">
+                  {[
+                    { id: "smile", label: "Smile", icon: Smile },
+                    { id: "heart", label: "Heart", icon: Heart },
+                    { id: "star", label: "Star", icon: Star },
+                    { id: "lock", label: "Lock", icon: Lock },
+                  ].map((s) => (
+                    <button
+                      key={s.id}
+                      aria-label={`${s.label} sticker`}
+                      title={s.label}
+                      aria-pressed={
+                        (selectedRegion?.sticker ?? sticker) === s.id
+                      }
+                      onClick={() => {
+                        setSticker(s.id as StickerStyle);
+                        updateSetting({ sticker: s.id as StickerStyle });
+                      }}
+                    >
+                      <s.icon
+                        size={25}
+                        fill={
+                          s.id === "heart" || s.id === "star"
+                            ? "currentColor"
+                            : "none"
+                        }
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {activeEffect === "redact" || activeEffect === "sticker" ? (
               <>
-                <label className="field-label">Block color</label>
+                <label className="field-label">
+                  {activeEffect === "sticker"
+                    ? "Sticker background"
+                    : "Block color"}
+                </label>
                 <div className="color-options">
                   {["#000000", "#ffffff", "#075b45"].map((c) => (
                     <button
                       key={c}
-                      aria-label={`Use ${c} redaction`}
+                      aria-label={`Use ${c} cover color`}
                       aria-pressed={(selectedRegion?.color ?? color) === c}
                       className={
                         (selectedRegion?.color ?? color) === c ? "chosen" : ""
@@ -432,8 +484,14 @@ export function Editor({
                 <div className="tool-notice">
                   <ShieldCheck size={16} />
                   <p>
-                    <strong>For the private stuff.</strong> Solid blocks
-                    permanently cover pixels in your exported PNG.
+                    <strong>
+                      {activeEffect === "sticker"
+                        ? "A little cover. A little character."
+                        : "For the private stuff."}
+                    </strong>{" "}
+                    {activeEffect === "sticker"
+                      ? "The entire sticker rectangle has an opaque background and is flattened into your PNG."
+                      : "Solid blocks permanently cover pixels in your exported PNG."}
                   </p>
                 </div>
               </>
@@ -507,6 +565,8 @@ export function Editor({
                         <Square size={13} fill="currentColor" />
                       ) : r.tool === "blur" ? (
                         <Droplets size={14} />
+                      ) : r.tool === "sticker" ? (
+                        <Smile size={14} />
                       ) : (
                         <Grid2X2 size={14} />
                       )}{" "}
@@ -514,7 +574,9 @@ export function Editor({
                         ? "Redaction"
                         : r.tool === "blur"
                           ? "Blur"
-                          : "Pixelation"}{" "}
+                          : r.tool === "sticker"
+                            ? "Sticker"
+                            : "Pixelation"}{" "}
                       {i + 1}
                     </span>
                     <span>

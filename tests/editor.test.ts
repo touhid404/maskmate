@@ -167,3 +167,28 @@ describe("pre-decode image headers", () => {
     expect(headerDimensions(new Uint8Array(0))).toBe(null);
   });
 });
+
+it("restores sticker styles, background colors, and geometry through undo/redo", () => {
+  const first: Region = {
+    ...r,
+    tool: "sticker",
+    sticker: "smile",
+    color: "#075b45",
+  };
+  const changed: Region = {
+    ...first,
+    sticker: "heart",
+    color: "#ffffff",
+    x: 40,
+    width: 140,
+  };
+  let state = historyReducer(initialHistory, {
+    type: "commit",
+    regions: [first],
+  });
+  state = historyReducer(state, { type: "commit", regions: [changed] });
+  state = historyReducer(state, { type: "undo" });
+  expect(state.regions).toEqual([first]);
+  state = historyReducer(state, { type: "redo" });
+  expect(state.regions).toEqual([changed]);
+});
