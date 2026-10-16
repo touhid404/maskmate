@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>MaskMate browser pixel checks</title>
+    <style>
+      body {
+        font: 15px system-ui;
+        background: #f5f8ef;
+        color: #183a2a;
+        padding: 30px;
+      }
+      li {
+        padding: 9px;
+      }
+      .fail {
+        color: #a22;
+      }
+      canvas {
+        max-width: 500px;
+        border: 1px solid #cbd5c1;
+      }
+      #status {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MaskMate browser checks</h1>
+    <p id="status">Running…</p>
+    <ol id="results"></ol>
+    <script type="module" src="./browser.ts"></script>
+  </body>
+</html>
