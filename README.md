@@ -22,6 +22,7 @@ Screenshots can expose phone numbers, addresses, transaction references, student
 
 ![Landing page](docs/screenshots/landing.png)
 ![Screenshot editor](docs/screenshots/editor.png)
+![Mobile editor viewport review](docs/screenshots/mobile.png)
 
 The receipt contains fictional example details. Design inspiration is credited in [milestones and design notes](docs/MILESTONES.md).
 
@@ -83,11 +84,25 @@ The renderer draws the source, applies blur/pixelation, and then fills every sol
 - Review the complete exported image, including names, pictures, QR codes, and surrounding context, before sharing.
 - The hosting provider may handle normal website access data. This application's local-image claim concerns screenshot bytes, not absolute anonymity.
 
+## Project links
+
+- [Repository](https://github.com/touhid404/maskmate)
+- [Hosted preview](https://maskmate-screenshot-privacy.spunky-shark-2321.chatgpt.site) — owner-private Sites deployment; Vercel can host the public application using the steps below.
+- [Milestones](https://github.com/touhid404/maskmate/milestones?state=closed)
+- [Quality checks](https://github.com/touhid404/maskmate/actions/workflows/ci.yml)
+
 ## GitHub workflow
 
 Repository: [touhid404/maskmate](https://github.com/touhid404/maskmate).
 
 Milestones use one tracking issue and one linked feature PR each. PR descriptions include acceptance criteria and validation, and use `Closes #…`. Branches use `feat/`. GitHub Actions runs lint, unit tests, TypeScript/build, and a production dependency audit. See [milestones](docs/MILESTONES.md).
+
+| Milestone                | Tracking issue                                       | Implementation PR                                  |
+| ------------------------ | ---------------------------------------------------- | -------------------------------------------------- |
+| Foundation               | [#1](https://github.com/touhid404/maskmate/issues/1) | [#5](https://github.com/touhid404/maskmate/pull/5) |
+| Landing and upload       | [#2](https://github.com/touhid404/maskmate/issues/2) | [#6](https://github.com/touhid404/maskmate/pull/6) |
+| Editor and secure export | [#3](https://github.com/touhid404/maskmate/issues/3) | [#7](https://github.com/touhid404/maskmate/pull/7) |
+| QA and release           | [#4](https://github.com/touhid404/maskmate/issues/4) | [#8](https://github.com/touhid404/maskmate/pull/8) |
 
 ## Deploy on Vercel
 
