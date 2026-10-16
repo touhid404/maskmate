@@ -1,3 +1,4 @@
+import { headerDimensions } from './imageHeader'
 import type { SourceImage } from '../types/editor'
 export const MAX_SIZE = 20 * 1024 * 1024
 export function validateFile(file: Pick<File, 'type' | 'size'>) {
@@ -10,6 +11,8 @@ export function validateDimensions(width: number, height: number) {
 }
 export async function decodeFile(file: File): Promise<SourceImage> {
   validateFile(file)
+  const header = headerDimensions(new Uint8Array(await file.slice(0, 1024 * 1024).arrayBuffer()))
+  if (header) validateDimensions(header.width, header.height)
   let image: ImageBitmap
   try { image = await createImageBitmap(file, { imageOrientation: 'from-image' }) } catch { throw new Error('We could not read this image. It may be damaged. Try another PNG, JPG, or WebP.') }
   try { validateDimensions(image.width, image.height) } catch (e) { image.close(); throw e }
