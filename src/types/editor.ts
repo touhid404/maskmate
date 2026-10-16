@@ -1,4 +1,5 @@
-export type Tool = "redact" | "blur" | "pixelate";
+export type StickerStyle = "smile" | "heart" | "star" | "lock";
+export type Tool = "redact" | "blur" | "pixelate" | "sticker";
 export interface Point {
   x: number;
   y: number;
@@ -10,6 +11,7 @@ export interface Region extends Point {
   tool: Tool;
   color: string;
   intensity: number;
+  sticker?: StickerStyle;
 }
 export interface SourceImage {
   image: ImageBitmap;

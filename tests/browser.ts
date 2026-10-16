@@ -228,6 +228,54 @@ await test("Re-encoding does not copy an injected EXIF GPS-bearing chunk", async
   );
   decoded.image.close();
 });
+for (const style of ["smile", "heart", "star", "lock"] as const) {
+  await test(`${style} sticker completely covers its rectangle with opaque pixels`, () => {
+    renderEditedImage(rendered, source, [
+      { ...base, tool: "sticker", sticker: style, color: "#075b45" },
+    ]);
+    const d = rendered
+      .getContext("2d")!
+      .getImageData(base.x, base.y, base.width, base.height).data;
+    for (let i = 3; i < d.length; i += 4)
+      assert(d[i] === 255, "transparent sticker pixel");
+    assert(
+      JSON.stringify(pixel(rendered, base.x, base.y)) === "[7,91,69,255]",
+      "source visible at sticker corner",
+    );
+  });
+}
+await test("Overlapping visual effects cannot expose opaque sticker covers", () => {
+  renderEditedImage(rendered, source, [
+    { ...base, tool: "sticker", sticker: "heart", color: "#075b45" },
+    { ...base, id: "late-blur", tool: "blur" },
+    { ...base, id: "late-pixel", tool: "pixelate" },
+  ]);
+  assert(
+    JSON.stringify(pixel(rendered, base.x + 3, base.y + 3)) === "[7,91,69,255]",
+    "sticker backing exposed",
+  );
+});
+await test("Sticker PNG independently decodes with its opaque backing and artwork", async () => {
+  renderEditedImage(rendered, source, [
+    { ...base, tool: "sticker", sticker: "star", color: "#075b45" },
+  ]);
+  const b = await blob(rendered),
+    decoded = await createImageBitmap(b),
+    probe = canvas2d(1920, 1080);
+  probe.ctx.drawImage(decoded, 0, 0);
+  assert(
+    JSON.stringify(pixel(probe.canvas, base.x, base.y)) === "[7,91,69,255]",
+    "export backing missing",
+  );
+  const center = pixel(
+    probe.canvas,
+    base.x + base.width / 2,
+    base.y + base.height / 2,
+  );
+  assert(center[0] > 200 && center[3] === 255, "sticker artwork missing");
+  decoded.close();
+  probe.canvas.width = 0;
+});
 source.image.close();
 original.canvas.width = 0;
 rendered.width = 0;

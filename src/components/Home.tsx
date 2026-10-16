@@ -16,6 +16,7 @@ import {
   ScanLine,
   Upload,
   Sparkles,
+  Smile,
 } from "lucide-react";
 import { Brand } from "./Brand";
 import { Uploader } from "./Uploader";
@@ -271,7 +272,7 @@ export function Home({
           <div className="upload-layout">
             <Uploader onFile={onFile} busy={busy} />
             <div className="upload-aside">
-              <div className="small-label">THREE TOOLS. ONE LESS WORRY.</div>
+              <div className="small-label">FOUR TOOLS. ONE LESS WORRY.</div>
               <div className="tool-feature">
                 <span className="tool-symbol solid">
                   <Square size={20} fill="currentColor" />
@@ -310,6 +311,21 @@ export function Home({
                     Give selected areas a classic mosaic effect.
                     <br />
                     You choose the pixel size.
+                  </p>
+                </div>
+              </div>
+              <div className="tool-feature">
+                <span className="tool-symbol sticker-symbol">
+                  <Smile size={22} />
+                </span>
+                <div>
+                  <h3>
+                    Stickers <span className="recommended">New</span>
+                  </h3>
+                  <p>
+                    A smile, a heart, a star, a little privacy.
+                    <br />
+                    Opaque covers with a bit of character.
                   </p>
                 </div>
               </div>

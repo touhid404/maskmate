@@ -4,13 +4,13 @@ Verified on 16 October 2026 using Node/Vite and the Codex in-app Chromium browse
 
 ## Automated local checks
 
-- 28 Vitest tests: all drag directions, clamping, fractional pixel coverage, zoom conversion, hit testing, immutable history, alternating undo/redo, reset/deletion history, redo invalidation, history bounds, file limits/formats, dimensions, and PNG/JPEG header parsing.
+- 29 Vitest tests: all drag directions, clamping, fractional pixel coverage, zoom conversion, hit testing, immutable history, alternating undo/redo, reset/deletion history, redo invalidation, history bounds, file limits/formats, dimensions, and PNG/JPEG header parsing.
 - Strict TypeScript, ESLint, Vite production build: pass.
 - Dependency audit after updating Vitest: zero known vulnerabilities at the time of verification.
 
 ## Real-browser image checks
 
-`/tests/browser.html`: 12 checks pass.
+`/tests/browser.html`: 18 checks pass.
 
 - PNG, JPEG, and WebP decode at 1920 × 1080.
 - Corrupt input receives a friendly error.
@@ -22,6 +22,8 @@ Verified on 16 October 2026 using Node/Vite and the Codex in-app Chromium browse
 - Removing a region restores original pixels; the original bitmap is unchanged.
 - A freshly encoded PNG independently decodes at original dimensions with covered pixels preserved and no UI outlines.
 - An injected synthetic EXIF/GPS-bearing PNG chunk is not copied to output. This does not test every EXIF layout or real-camera GPS fixture.
+
+Sticker checks verify opaque backing for all four styles, preservation under overlapping effects, a separately decoded sticker PNG, and style/color/geometry history.
 
 ## Interactive checks
 
