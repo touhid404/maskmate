@@ -2,12 +2,7 @@ import { Component, useCallback, useEffect, useRef, useState } from 'react'
 import type { ErrorInfo, ReactNode } from 'react'
 import { Toaster, toast } from 'sonner'
 import { Home } from './components/Home'
-import { Uploader } from './components/Uploader'
-function Editor({source,onHome,onFile,onDemo,busy}:{source:SourceImage|null;onHome:()=>void;onFile:(f:File)=>void;onDemo:()=>void;busy:boolean}) {
-  const canvas=useRef<HTMLCanvasElement>(null)
-  useEffect(()=>{if(source&&canvas.current){canvas.current.width=source.width;canvas.current.height=source.height;canvas.current.getContext('2d')?.drawImage(source.image,0,0)}},[source])
-  return <main className="empty-editor"><div className="container"><Button variant="ghost" onClick={onHome}>Back to home</Button><h1>{source?'Your screenshot is ready.':'Let’s keep it private.'}</h1><p>{source?`${source.name} · ${source.width} × ${source.height} pixels`:'Choose a screenshot to preview locally.'}</p>{source?<canvas ref={canvas} style={{maxWidth:'100%',maxHeight:'65vh',margin:'30px auto',display:'block'}}/>:<><Uploader onFile={onFile} busy={busy}/><button className="text-button" onClick={onDemo}>Try a sample screenshot</button></>}</div></main>
-}
+import { Editor } from './components/Editor'
 import { Button } from './components/ui/button'
 import { decodeFile } from './lib/upload'
 import { createDemo } from './lib/demo'
